@@ -13,9 +13,7 @@ const Home = () => {
   const navigation = useNavigation();
 
   function handleNavigateToManagerProduct() {
-    navigation.navigate(' ', {
-      product: null
-    });
+    navigation.navigate(' ');
   }
 
   return (

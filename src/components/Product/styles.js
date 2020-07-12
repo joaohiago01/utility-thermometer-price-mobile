@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
     alignSelf: 'auto',
   },
 
-  icons: {
+  icon: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexWrap: 'wrap',
     marginBottom: 5,
+    justifyContent: 'flex-start'
   },
 
   imageContainer: {
@@ -28,7 +29,9 @@ const styles = StyleSheet.create({
 
   infoContainer: {
     padding: 15,
-    paddingTop: 5
+    paddingTop: 5,
+    marginBottom: 15,
+    justifyContent: 'flex-start'
   },
 
   name: {
@@ -36,15 +39,16 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Roboto_300Light',
     fontWeight: 'bold',
-    fontSize: 18
+    fontSize: 16
   },
 
   utility: {
     textAlign: 'left',
     color: '#000',
     fontFamily: 'Roboto_300Light',
-    fontSize: 16,
-    marginTop: 5
+    fontSize: 14,
+    marginTop: 5,
+    marginBottom: 5
   },
 
   price: {
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Roboto_300Light',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
     marginTop: 5,
   },
 });

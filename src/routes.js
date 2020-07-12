@@ -10,8 +10,8 @@ const AppStack = createStackNavigator();
 const Routes = () => {
   return (
       <NavigationContainer>
-          <AppStack.Navigator headerMode='screen' initialRouteName='Home' screenOptions={{cardStyle: {backgroundColor: '#FFF'}}}>
-              <AppStack.Screen name='Home' component={Home}/>
+          <AppStack.Navigator headerMode='screen' initialRouteName='Medidor de Utilidade' screenOptions={{cardStyle: {backgroundColor: '#FFF'}}}>
+              <AppStack.Screen name='Medidor de Utilidade' component={Home}/>
               <AppStack.Screen name=' ' component={ManagerProduct}/>
           </AppStack.Navigator>
       </NavigationContainer>

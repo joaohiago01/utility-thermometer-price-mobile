@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "utility-thermometer",
-    "slug": "utility-thermometer",
+    "name": "Medidor de Utilidade",
+    "slug": "MedidorDeUtilidade",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF2C2C"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,10 +17,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.merciless.utilitythermometer",
+      "buildNumber": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.merciless.utilitythermometer",
+      "versionCode": 1
     }
   }
 }

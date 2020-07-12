@@ -8,7 +8,7 @@ import * as Permissions from 'expo-permissions';
 import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import Input from '../../components/Input';
 
@@ -18,21 +18,18 @@ import api from '../../services/api';
 const ManagerProduct = () => {
 
   const navigation = useNavigation();
-  const route = useRoute();
-  const routeParams = route.params;
 
-  const [product, setProduct] = useState({});
-  const [imageFile, setImageFile] = useState('');
-  const [imagePreview, setImagePreview] = useState('');
+  const [image, setImage] = useState('');
 
   const formRef = useRef(null);
 
   async function handleSubmit(data) {
     try {
-      if (imageFile.length < 1) {
+      if (image.length < 1) {
         Alert.alert('Campos inválidos', 'Por favor, preencha todos os campos corretamente.');
         return;
       }
+
       const schema = Yup.object().shape({
         name: Yup.string().required(),
         price: Yup.number().required(),
@@ -41,20 +38,20 @@ const ManagerProduct = () => {
         abortEarly: false,
       });
       // Validation passed
-      console.log(data);
       const newProduct = new FormData();
 
       newProduct.append('name', data.name);
       newProduct.append('price', data.price);
-      newProduct.append('image', imageFile);
+      newProduct.append('image', image);
 
-      console.log(newProduct);
-      api.post('products', data).then(response => {
+      api.post('products', newProduct).then(response => {
+
         if (response.data.message === 'Produto já existe') {
           Alert.alert('Oops...', 'Este produto já está na lista');
         } else {
-          navigation.navigate('Home');
+          navigation.navigate('Medidor de Utilidade');
         }
+
       });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -65,7 +62,6 @@ const ManagerProduct = () => {
   }
 
   useEffect(() => {
-
     getPermissionAsync = async () => {
       if (Constants.platform.ios) {
         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -75,33 +71,27 @@ const ManagerProduct = () => {
       }
     }
 
-    if (routeParams.product != null) {
-      setProduct(routeParams.product);
-    }
-
   }, []);
 
   useEffect(() => {
-    setImagePreview(imagePreview);
-  }, [imagePreview]);
+    setImage(image);
+  }, [image]);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1, marginTop: 15 }} behavior={Platform.OS === 'ios' ? 'padding' : 'position'}>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        {imagePreview.length > 0 ? <Image source={{ uri: imagePreview }} style={styles.image} /> : (<View style={styles.dropzone}><Text style={styles.dropzoneText}>Selecione uma imagem</Text></View>)}
+        {image.length > 0 ? <Image source={{ uri: `data:image/gif;base64,${image}` }} style={styles.image} /> : (<View style={styles.dropzone}><Text style={styles.dropzoneText}>Selecione uma imagem</Text></View>)}
         <TouchableOpacity style={styles.button} onPress={async () => {
           try {
             let result = await ImagePicker.launchImageLibraryAsync({
-              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              mediaTypes: ImagePicker.MediaTypeOptions.Images,
               allowsEditing: true,
               aspect: [4, 3],
               quality: 1,
+              base64: true
             });
             if (!result.cancelled) {
-              let image_uri = result.uri;
-              let image_file = image_uri.split('/')[11];
-              setImageFile(image_uri);
-              setImagePreview(result.uri);
+              setImage(result.base64);
             }
 
           } catch (err) {
